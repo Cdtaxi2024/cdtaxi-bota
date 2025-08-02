@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bookings Admin</title>
+</head>
+<body>
+  <h1>Bookings</h1>
+  <table id="booking-table" border="1">
+    <thead>
+      <tr>
+        <th>Pickup</th>
+        <th>Destination</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Name</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function loadBookings() {
+      const res = await fetch('/api/bookings');
+      const bookings = await res.json();
+      const tbody = document.querySelector('#booking-table tbody');
+      tbody.innerHTML = '';
+      bookings.forEach(b => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${b.pickup}</td><td>${b.destination}</td><td>${b.date}</td><td>${b.time}</td><td>${b.name}</td><td>€${b.price}</td>`;
+        tbody.appendChild(row);
+      });
+    }
+    loadBookings();
+  </script>
+</body>
+</html>

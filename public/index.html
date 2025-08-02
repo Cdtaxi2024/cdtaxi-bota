@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taxi Booking</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+</head>
+<body>
+  <h1>Taxi Booking</h1>
+  <form id="booking-form">
+    <label>Pickup: <input type="text" id="pickup" required /></label><br />
+    <label>Destination: <input type="text" id="destination" required /></label><br />
+    <label>Date: <input type="date" id="date" required /></label><br />
+    <label>Time: <input type="time" id="time" required /></label><br />
+    <label>Passengers: <input type="number" id="passengers" min="1" value="1" required /></label><br />
+    <label>Baggage: <input type="number" id="baggage" min="0" value="0" /></label><br />
+    <label>Flight Number: <input type="text" id="flight" /></label><br />
+    <label>Name: <input type="text" id="name" required /></label><br />
+    <label>Phone: <input type="tel" id="phone" required /></label><br />
+    <label>Email: <input type="email" id="email" required /></label><br />
+    <label>Trip Type:
+      <select id="tripType">
+        <option value="oneway">One Way</option>
+        <option value="return">Return</option>
+      </select>
+    </label><br />
+    <button type="submit">Calculate Price</button>
+  </form>
+  <div id="summary"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
