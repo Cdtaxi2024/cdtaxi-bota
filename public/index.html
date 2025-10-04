@@ -1,34 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taxi Booking</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
-</head>
-<body>
-  <h1>Taxi Booking</h1>
-  <form id="booking-form">
-    <label>Pickup: <input type="text" id="pickup" required /></label><br />
-    <label>Destination: <input type="text" id="destination" required /></label><br />
-    <label>Date: <input type="date" id="date" required /></label><br />
-    <label>Time: <input type="time" id="time" required /></label><br />
-    <label>Passengers: <input type="number" id="passengers" min="1" value="1" required /></label><br />
-    <label>Baggage: <input type="number" id="baggage" min="0" value="0" /></label><br />
-    <label>Flight Number: <input type="text" id="flight" /></label><br />
-    <label>Name: <input type="text" id="name" required /></label><br />
-    <label>Phone: <input type="tel" id="phone" required /></label><br />
-    <label>Email: <input type="email" id="email" required /></label><br />
-    <label>Trip Type:
-      <select id="tripType">
-        <option value="oneway">One Way</option>
-        <option value="return">Return</option>
-      </select>
-    </label><br />
-    <button type="submit">Calculate Price</button>
-  </form>
-  <div id="summary"></div>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CDTaxi – Reserveer je rit</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="script.js" defer></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2oWvZWd23Bo0JrmAc3N831GmFqZHpT1M&libraries=places&callback=initBookingApp"
+      defer
+    ></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Nederland &amp; België</p>
+        <h1>Reserveer je rit in minder dan 60 seconden</h1>
+        <p class="hero__lead">
+          Volautomatische prijsberekening met Google Maps, realtime beschikbaarheid en
+          professionele chauffeurs. Kies jouw voertuig en bevestig direct.
+        </p>
+        <div class="hero__stats">
+          <div>
+            <span class="hero__stat">24/7</span>
+            <span class="hero__label">Beschikbaar</span>
+          </div>
+          <div>
+            <span class="hero__stat">4.9/5</span>
+            <span class="hero__label">Klanttevredenheid</span>
+          </div>
+          <div>
+            <span class="hero__stat">+12k</span>
+            <span class="hero__label">Ritten per jaar</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-  <script src="script.js"></script>
-</body>
+    <main class="layout">
+      <section class="booking">
+        <form id="booking-form" class="booking__form">
+          <div class="form-section">
+            <h2>Reisgegevens</h2>
+            <div class="grid grid--two">
+              <label class="field">
+                <span>Van (origine)</span>
+                <input type="text" id="pickup" placeholder="Vertrekadres" required />
+              </label>
+              <label class="field">
+                <span>Naar (bestemming)</span>
+                <input type="text" id="destination" placeholder="Bestemming" required />
+              </label>
+            </div>
+
+            <div id="stops-container" class="stops"></div>
+            <button type="button" class="chip chip--ghost" id="add-stop">
+              + Tussenstop toevoegen (max. 2)
+            </button>
+
+            <div class="grid grid--three">
+              <label class="field">
+                <span>Aantal reizigers</span>
+                <input
+                  type="number"
+                  id="passengers"
+                  min="1"
+                  max="12"
+                  value="1"
+                  required
+                />
+              </label>
+              <label class="field field--select">
+                <span>Reis je met bagage?</span>
+                <div class="baggage-grid">
+                  <div class="baggage-item">
+                    <span>Grote koffer</span>
+                    <input type="number" id="baggage-large" min="0" value="0" />
+                  </div>
+                  <div class="baggage-item">
+                    <span>Kleine koffer</span>
+                    <input type="number" id="baggage-small" min="0" value="0" />
+                  </div>
+                  <div class="baggage-item">
+                    <span>Handbagage</span>
+                    <input type="number" id="baggage-hand" min="0" value="0" />
+                  </div>
+                </div>
+              </label>
+              <label class="field">
+                <span>Retour?</span>
+                <div class="toggle">
+                  <input type="checkbox" id="return-trip" />
+                  <label for="return-trip">Ja, retour boeken</label>
+                </div>
+              </label>
+            </div>
+
+            <div class="grid grid--two">
+              <label class="field">
+                <span>Ophaalmoment</span>
+                <input type="datetime-local" id="pickup-datetime" required />
+                <small class="help">
+                  Of kies <button type="button" id="asap" class="link">Zo snel mogelijk</button>
+                </small>
+              </label>
+              <label class="field">
+                <span>Vluchtnummer (optioneel)</span>
+                <input type="text" id="flight" placeholder="KL1234" />
+              </label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Persoonlijke gegevens</h2>
+            <div class="grid grid--three">
+              <label class="field">
+                <span>Voor- en achternaam</span>
+                <input type="text" id="name" placeholder="Naam" required />
+              </label>
+              <label class="field">
+                <span>Telefoonnummer</span>
+                <input type="tel" id="phone" placeholder="06 12345678" required />
+              </label>
+              <label class="field">
+                <span>E-mail</span>
+                <input type="email" id="email" placeholder="naam@bedrijf.nl" required />
+              </label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Betaalmethode</h2>
+            <div class="payment-options" id="payment-options">
+              <label class="payment-option">
+                <input type="radio" name="payment" value="contant" checked />
+                <span>Contant</span>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment" value="pin" />
+                <span>Pin (in de wagen)</span>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment" value="stripe" />
+                <span>Stripe (iDEAL &amp; creditcards)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary">Bereken mijn ritprijs</button>
+            <button type="button" id="confirm-booking" class="btn btn--secondary" disabled>
+              Boeking bevestigen
+            </button>
+            <p class="form-note">
+              Na bevestiging ontvang je automatisch een e-mail met alle gegevens en een
+              uitnodiging voor betaling.
+            </p>
+          </div>
+        </form>
+      </section>
+
+      <aside class="sidebar">
+        <section class="vehicle-picker">
+          <div class="vehicle-picker__header">
+            <h2>Voertuig kiezen</h2>
+            <div class="chip-group" id="vehicle-filters"></div>
+          </div>
+          <div id="vehicle-list" class="vehicle-list"></div>
+        </section>
+
+        <section class="summary" id="summary">
+          <h2>Samenvatting</h2>
+          <p class="summary__placeholder">
+            Vul je gegevens in en kies een voertuig om de ritprijs te berekenen.
+          </p>
+        </section>
+
+        <section class="panel">
+          <button type="button" id="toggle-pricing-panel" class="panel__toggle">
+            Tarieven beheren
+          </button>
+          <div id="pricing-panel" class="panel__content" hidden>
+            <h3>Tarieven per voertuig</h3>
+            <p class="panel__info">
+              Pas de basisprijs en kilometer/minuut prijzen aan. Wijzigingen worden direct
+              toegepast.
+            </p>
+            <div id="pricing-panel-content"></div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <p>
+        © <span id="current-year"></span> CDTaxi. Google Maps integratie met realtime prijzen.
+      </p>
+    </footer>
+  </body>
 </html>

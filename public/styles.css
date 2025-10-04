@@ -1,0 +1,618 @@
+:root {
+  color-scheme: light;
+  font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --bg: #0e1117;
+  --bg-soft: #151a24;
+  --panel: #ffffff;
+  --primary: #0065ff;
+  --primary-dark: #004bba;
+  --accent: #00c2ff;
+  --border: rgba(15, 23, 42, 0.12);
+  --border-strong: rgba(15, 23, 42, 0.25);
+  --text: #0f172a;
+  --text-muted: #475569;
+  --success: #16a34a;
+  --shadow: 0 20px 40px -24px rgba(15, 23, 42, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+body.admin {
+  background: #f5f7fb;
+}
+
+a {
+  color: inherit;
+}
+
+.hero {
+  background: radial-gradient(circle at top left, rgba(0, 98, 255, 0.18), transparent 55%),
+    radial-gradient(circle at top right, rgba(0, 194, 255, 0.2), transparent 45%),
+    #0f172a;
+  color: white;
+  padding: 4rem clamp(1.5rem, 4vw, 4rem);
+}
+
+.hero__content {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin: 0 0 1rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  margin: 0 0 1.5rem;
+  line-height: 1.1;
+}
+
+.hero__lead {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  max-width: 54ch;
+  opacity: 0.85;
+}
+
+.hero__stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hero__stat {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.hero__label {
+  font-size: 0.95rem;
+  opacity: 0.7;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  max-width: 1280px;
+  margin: -4rem auto 0;
+}
+
+.admin__layout {
+  margin-top: -2rem;
+}
+
+.booking__form,
+.sidebar {
+  background: var(--panel);
+  border-radius: 1.75rem;
+  padding: clamp(1.75rem, 2vw, 2.5rem);
+  box-shadow: var(--shadow);
+}
+
+.booking__form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.form-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.grid--two {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.grid--three {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.field span,
+.field label {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.field input,
+.field select,
+.payment-option input,
+.payment-option span,
+.summary,
+.vehicle-card {
+  font-family: inherit;
+}
+
+.field input,
+.field select {
+  border-radius: 0.9rem;
+  border: 1px solid var(--border);
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 101, 255, 0.12);
+}
+
+.baggage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, 1fr));
+  gap: 0.75rem;
+}
+
+.baggage-item {
+  background: rgba(15, 23, 42, 0.04);
+  border-radius: 0.9rem;
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.baggage-item input {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--border);
+  background: white;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(15, 23, 42, 0.04);
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+}
+
+.toggle input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.help {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.payment-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  transition: border 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+
+.payment-option input {
+  accent-color: var(--primary);
+}
+
+.payment-option:hover {
+  border-color: var(--primary);
+  background: rgba(0, 101, 255, 0.08);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip--ghost {
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--text);
+  border-color: rgba(15, 23, 42, 0.05);
+}
+
+.chip--active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.chip-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  border-radius: 1.2rem;
+  font-size: 1rem;
+  padding: 0.95rem 1.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  box-shadow: 0 16px 35px -22px rgba(0, 101, 255, 0.7);
+}
+
+.btn--primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  background: rgba(15, 23, 42, 0.07);
+  color: var(--text);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.sidebar {
+  display: grid;
+  gap: 1.75rem;
+  height: fit-content;
+}
+
+.vehicle-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.vehicle-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.vehicle-card {
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  transition: border 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  background: white;
+}
+
+.vehicle-card:hover,
+.vehicle-card--active {
+  border-color: var(--primary);
+  box-shadow: 0 16px 35px -24px rgba(0, 101, 255, 0.65);
+  transform: translateY(-2px);
+}
+
+.vehicle-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vehicle-card__body {
+  padding: 1.1rem 1.25rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.vehicle-card__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.vehicle-card__title h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.vehicle-card__badge {
+  background: rgba(22, 163, 74, 0.15);
+  color: var(--success);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.vehicle-card__meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.vehicle-card__features {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.vehicle-card__features span {
+  background: rgba(15, 23, 42, 0.06);
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+}
+
+.summary {
+  display: grid;
+  gap: 1rem;
+}
+
+.summary__price {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.summary__grid {
+  display: grid;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.summary__grid strong {
+  color: var(--text);
+}
+
+.summary__placeholder {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  background: white;
+}
+
+.panel__toggle {
+  width: 100%;
+  border: none;
+  background: rgba(15, 23, 42, 0.05);
+  border-radius: 1rem;
+  padding: 0.9rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.panel__toggle:hover {
+  background: rgba(15, 23, 42, 0.09);
+}
+
+.panel__content {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.panel__info {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.pricing-form {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  display: grid;
+  gap: 0.8rem;
+  background: rgba(15, 23, 42, 0.03);
+}
+
+.pricing-form h4 {
+  margin: 0;
+}
+
+.pricing-form__grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.pricing-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.pricing-form input {
+  border-radius: 0.65rem;
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.6rem;
+}
+
+.pricing-form button {
+  justify-self: flex-start;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.6rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.stops {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.stop-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.stop-item button {
+  border: none;
+  background: rgba(255, 59, 48, 0.12);
+  color: #ef4444;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  cursor: pointer;
+}
+
+.footer {
+  text-align: center;
+  padding: 2.5rem 1rem 3.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table thead {
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.table th,
+.table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table tbody tr:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.hero--compact {
+  padding-bottom: 2.5rem;
+}
+
+.booking--admin .booking__form {
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    order: -1;
+  }
+
+  .vehicle-card {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicle-card img {
+    height: 180px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 3rem 1.5rem;
+  }
+
+  .layout {
+    padding: 1.5rem;
+    margin-top: -3rem;
+  }
+
+  .booking__form,
+  .sidebar {
+    border-radius: 1.2rem;
+  }
+
+  .baggage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-options {
+    flex-direction: column;
+  }
+}

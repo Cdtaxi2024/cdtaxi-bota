@@ -1,38 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Bookings Admin</title>
-</head>
-<body>
-  <h1>Bookings</h1>
-  <table id="booking-table" border="1">
-    <thead>
-      <tr>
-        <th>Pickup</th>
-        <th>Destination</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Name</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CDTaxi – Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="admin.js" defer></script>
+  </head>
+  <body class="admin">
+    <header class="hero hero--compact">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Dashboard</p>
+        <h1>Beheer reserveringen &amp; tarieven</h1>
+        <p class="hero__lead">
+          Bekijk recente boekingen, pas voertuigprijzen aan en houd je wagenpark up-to-date.
+        </p>
+      </div>
+    </header>
 
-  <script>
-    async function loadBookings() {
-      const res = await fetch('/api/bookings');
-      const bookings = await res.json();
-      const tbody = document.querySelector('#booking-table tbody');
-      tbody.innerHTML = '';
-      bookings.forEach(b => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${b.pickup}</td><td>${b.destination}</td><td>${b.date}</td><td>${b.time}</td><td>${b.name}</td><td>€${b.price}</td>`;
-        tbody.appendChild(row);
-      });
-    }
-    loadBookings();
-  </script>
-</body>
+    <main class="layout admin__layout">
+      <section class="booking booking--admin">
+        <div class="booking__form">
+          <h2>Recente reserveringen</h2>
+          <table class="table" id="booking-table">
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Klant</th>
+                <th>Route</th>
+                <th>Voertuig</th>
+                <th>Prijs</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="panel">
+          <h2>Tariefbeheer</h2>
+          <p class="panel__info">
+            Update basisprijzen, per-kilometer tarieven en extra bagagekosten per voertuigcategorie.
+          </p>
+          <div id="admin-pricing" class="panel__content"></div>
+        </section>
+      </aside>
+    </main>
+  </body>
 </html>
